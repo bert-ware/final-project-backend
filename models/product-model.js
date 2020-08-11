@@ -17,7 +17,8 @@ const productSchema = new Schema ({
         required: true
     },
     format: {
-        //podemos hacer opciones
+        type: String,
+        enum: [gr,ml,dash]
     },
     info: {
         type: String
