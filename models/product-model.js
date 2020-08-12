@@ -1,5 +1,6 @@
 //Product schema
 const { Schema,model, Mongoose} = require('mongoose')
+const mongoose = require('mongoose')
 
 const productSchema = new Schema ({
 
@@ -24,7 +25,7 @@ const productSchema = new Schema ({
         type: String
     },
     idprovider: {
-        type: Mongoose.Schema.Types.ObjectID,
+        type: mongoose.Schema.Types.ObjectID,
         ref: "Provider"
     }
 
