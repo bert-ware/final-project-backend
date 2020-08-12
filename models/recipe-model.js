@@ -1,5 +1,6 @@
 //Recipe schema
 const { Schema,model, Mongoose} = require('mongoose')
+const mongoose = require('mongoose')
 
 const recipeSchema = new Schema ({
 
