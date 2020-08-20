@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const express      = require('express');
 const favicon      = require('serve-favicon');
 const hbs          = require('hbs');
-const mongoose     = require('mongoose');
+const mongoose     = require('mongoose'); 
 const logger       = require('morgan');
 const path         = require('path');
 
@@ -50,9 +50,17 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.locals.title = 'Express - Generated with IronGenerator';
 
 
+// ROUTES MIDDLEWARE STARTS HERE:
 
 const index = require('./routes/index');
+const providerRoute = require('./routes/provider')
+const productRoute = require("./routes/product")
+
 app.use('/', index);
+app.use('/api', providerRoute);
+app.use("/api", productRoute)
+
+
 
 
 module.exports = app;
