@@ -9,22 +9,27 @@ const Product = require("../models/product-model")
 router.post('/providers', (req, res, next) => {
   // req.body
   Provider.create({
-    name: req.body.name,
-    adress: req.body.adress,
+    name: req.body.name,  
+    adress:{
+      street : req.body.adress.street,
+      number : req.body.adress.number
+    }, 
     telephone: req.body.telephone,
     info: req.body.info
   })
   .then(response => {
-    res.json(response)
+    console.log(response)
+    res.json(response)  
   })
   .catch(err => {
+    console.log(err)
     res.json(err)
   })
 })
 
-router.get('/provider', (req, res, next) => {
+/*router.get('/provider', (req, res, next) => {
   // recoger TODOS los proyectos, y devolver como JSON
-  // TO-DO: popular con las tasks
+  // TO-DO: popular con las productos
   provider.find()
   .populate('products')
   .then(provider => {
@@ -34,16 +39,17 @@ router.get('/provider', (req, res, next) => {
     res.json(err)
   })
 
-})
+})*/
 
-router.get('/provider/:id', (req, res, next) => {
+router.get('/providers/:id', (req, res, next) => {
   console.log(req.params.id)
-  provider.findById(req.params.id)
-  .populate('products')
+  Provider.findById(req.params.id)
+ // .populate('products')
   .then(provider => {
     res.json(provider)
   })
   .catch(err => {
+    console.log(err)
     res.json(err)
   })
   

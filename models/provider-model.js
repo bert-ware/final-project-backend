@@ -14,11 +14,11 @@ const providerSchema = new Schema({
                 type: String,
                 trim: true,
                 required: true
-                }},
+                },
             number: {
                 type: Number,
                 required: true
-                  }, 
+                  }}, 
             telephone: {
                 type: Number,
                 required: true
