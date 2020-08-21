@@ -17,13 +17,13 @@ router.get('/providers/:projectId/product/:productId', (req, res, next) => {
 });
 
 // POST route => to create a new product
-router.post('/product', (req, res, next) => {
+router.post('/products', (req, res, next) => {
   Product.create({
     name: req.body.name,
     graduation: req.body.graduation,
     price: req.body.price,
     format: req.body.format,
-    info: req.bosy.info,
+    info: req.body.info,
     idprovider: req.body.idprovider
   })
     .then(response => {

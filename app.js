@@ -45,6 +45,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
+// en el archivo app.js:
+// más o menos en el area donde están los middlewares:
+const cors = require('cors');
+// ...
+app.use(
+  cors({
+    credentials: true,
+    origin: ['http://localhost:3001'] // <== permitir llamadas de este origen
+  })
+);
+
+
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
