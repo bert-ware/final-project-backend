@@ -56,9 +56,11 @@ app.use(
 const index = require('./routes/index');
 const providerRoute = require('./routes/provider')
 const productRoute = require("./routes/product")
+const authRoutes = require('./routes/Auth/auth-routes')
 
 app.use('/', index);
-app.use('/api', providerRoute);
+app.use('/api', providerRoute)
 app.use("/api", productRoute)
+app.use('/api', authRoutes)
 
 module.exports = app;
