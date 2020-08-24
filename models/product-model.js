@@ -19,7 +19,6 @@ const productSchema = new Schema ({
     },
     format: {
         type: String,
-        enum: ["gr","ml","dash"]
     },
     info: {
         type: String

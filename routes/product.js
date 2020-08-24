@@ -1,74 +1,91 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const router = express.Router();
+const express = require('express')
+const mongoose = require('mongoose')
+const router = express.Router()
 
-const Provider = require('../models/provider-model')
-const Product = require("../models/product-model")
+const Product = require('../models/product-model')
 
-// GET route => to retrieve a specific product1
-router.get('/providers/:projectId/product/:productId', (req, res, next) => {
-  Product.findById(req.params.productId)
-    .then(product => {
-      res.json(product);
-    })
-    .catch(error => {
-      res.json(error);
-    });
-});
-
-// POST route => to create a new product
+// Post route => to create one product
 router.post('/products', (req, res, next) => {
   Product.create({
-    name: req.body.name,
-    graduation: req.body.graduation,
-    price: req.body.price,
-    format: req.body.format,
-    info: req.body.info,
-    idprovider: req.body.idprovider
-  })
+      name: req.body.name,
+      graduation: req.body.graduation,
+      price: req.body.price,
+      format: req.body.format,
+      info: req.body.info
+    })
     .then(response => {
-      return Provider.findByIdAndUpdate(req.body.providerID, {
-        $push: { product: response._id }
-      });
+      console.log(response)
+      res.json(response)
     })
-    .then(theResponse => {
-      res.json(theResponse);
+    .catch(erroror => {
+      console.log(error)
+      res.json(error)
     })
-    .catch(err => {
-      res.json(err);
-    });
-});
+})
+// GET route => to find and return all product list
+router.get('/products', (req, res, next) => {
+  Product.find()
+    .then(products => {
+      console.log(products)
+      res.json(products)
+    })
+    .catch(error => {
+      res.json(error)
+    })
+
+})
+// GET route => to find and return an especific product
+router.get('/products/:id', (req, res, next) => {
+  console.log(req.params.id)
+  Product.findById(req.params.id)
+    .then(product => {
+      console.log(product)
+      res.json(product)
+    })
+    .catch(error => {
+      console.log(error)
+      res.json(error)
+    })
+
+})
 
 // PUT route => to update a specific product
-router.put('/product/:id', (req, res, next) => {
+router.put('/products/:id', (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: 'Specified id is not valid' });
+    res.status(400).json({
+      message: 'Specified id is not valid'
+    });
     return;
   }
-
   Product.findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
-      res.json({ message: `Product with ${req.params.id} is updated successfully.` });
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
-
-// DELETE route => to delete a specific task
-router.delete('/product/:id', (req, res, next) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: 'Specified id is not valid' });
-    return;
-  }
-
-  Product.findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({ message: `Product with ${req.params.id} is removed successfully.` });
+      res.json({
+        message: `product with ${req.params.id} is updated successfully.`
+      });
     })
     .catch(error => {
       res.json(error);
     });
 });
 
-module.exports = router;
+// DELETE route => to delete a specific product
+router.delete('/products/:id', (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).json({
+      message: 'Specified id is not valid'
+    });
+    return;
+  }
+  Product.findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.json({
+        message: `product with ${req.params.id} is removed successfully.`
+      });
+    })
+    .catch(error => {
+      res.json(error);
+    });
+});
+
+
+module.exports = router
