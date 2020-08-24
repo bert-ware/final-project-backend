@@ -48,7 +48,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // en el archivo app.js:
 // más o menos en el area donde están los middlewares:
-const cors = require('cors');
+// const cors = require('cors');
 // ...
 app.use(
   cors({
