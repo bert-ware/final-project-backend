@@ -10,7 +10,6 @@ const logger       = require('morgan');
 const path         = require('path');
 const cors         = require('cors');
 
-
 mongoose
   .connect('mongodb://localhost/final-project', {useNewUrlParser: true})
   .then(x => {
@@ -38,30 +37,14 @@ app.use(require('node-sass-middleware')({
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
-      
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-
-// en el archivo app.js:
-// más o menos en el area donde están los middlewares:
-// const cors = require('cors');
-// ...
-app.use(
-  cors({
-    credentials: true,
-    origin: ['http://localhost:3001'] // <== permitir llamadas de este origen
-  })
-);
-
-
-
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
 // ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 app.use(
   cors({
@@ -69,10 +52,7 @@ app.use(
     origin: ['http://localhost:3001', 'http://localhost:3000'] // <== aceptar llamadas desde este dominio
   })
 );
-
-
 // ROUTES MIDDLEWARE STARTS HERE:
-
 const index = require('./routes/index');
 const providerRoute = require('./routes/provider')
 const productRoute = require("./routes/product")
@@ -80,8 +60,5 @@ const productRoute = require("./routes/product")
 app.use('/', index);
 app.use('/api', providerRoute);
 app.use("/api", productRoute)
-
-
-
 
 module.exports = app;
