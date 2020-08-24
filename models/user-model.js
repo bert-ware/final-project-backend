@@ -23,8 +23,8 @@ const userSchema = new Schema({
     //Password property 
     passwordHash: {
     type: String,
-    //required: [true, "La contraseña es un campo requerido :) ."]
+    required: [true, "La contraseña es un campo requerido :) ."]
   }
 })
 
-module.exports = model('Usuario', userSchema)
+module.exports = model('User', userSchema)
