@@ -8,6 +8,7 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose'); 
 const logger       = require('morgan');
 const path         = require('path');
+const cors         = require('cors');
 
 
 mongoose
@@ -60,6 +61,14 @@ app.use(
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
+
+// ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
+app.use(
+  cors({
+    credentials: true,
+    origin: ['http://localhost:3001', 'http://localhost:3000'] // <== aceptar llamadas desde este dominio
+  })
+);
 
 
 // ROUTES MIDDLEWARE STARTS HERE:
