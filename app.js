@@ -9,12 +9,11 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 const cors         = require('cors');
-
 const session       = require('express-session');
-
 const passport      = require('passport');
 require('./configs/passport');
 
+//Conexion base datos MongoDB
 mongoose
   .connect('mongodb://localhost/final-project', {useNewUrlParser: true})
   .then(x => {
@@ -49,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'Drink-apps';
 // ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 app.use(
   cors({
@@ -59,14 +58,25 @@ app.use(
 );
 
 // ADD SESSION SETTINGS HERE:
-app.use(session({
+/* app.use(session({
   secret:"some secret goes here",
   resave: true,
   saveUninitialized: true
-}));
+})); */
+
+// ADD SESSION SETTINGS HERE:
+const createSession = require("./configs/session")
+createSession(app)
+app.use(function (req, res, next) {
+  res.locals.session = req.session;
+  try {
+    req.session.currentUser = req.session.passport.user;
+  } catch {
+    }
+  next();
+})
 
 //Passport
-
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -1,7 +1,9 @@
-const express = require('express');
-const authRoutes = express.Router();
-//const passport   = require('passport')
+const express = require('express')
+const authRoutes = express.Router()
+const passport = require('passport')
 const bcrypt = require('bcryptjs');
+const session = require('express-session')
+
 
 const User = require('../../models/user-model')
 
@@ -22,7 +24,7 @@ authRoutes.post('/signup', (req, res, next) => {
             message: 'Password must contain at least 6 characters, one capital letter and a number'
         })
         return
-    } 
+    }
     //Asegurar formato email
     const emailRegex = /^\S+@\S+\.\S+$/
     if (!emailRegex.test(email)) {
@@ -32,16 +34,18 @@ authRoutes.post('/signup', (req, res, next) => {
         return
     }
 
-    User.findOne({username}, (err, foundUser) => {
+    User.findOne({
+        username
+    }, (err, foundUser) => {
         if (err) {
             res.status(500).json({
-             message: "Username check went bad."
+                message: "Username check went bad."
             })
             return;
         }
         if (foundUser) {
             res.status(400).json({
-            message: 'Username already in use. Choose another one.'
+                message: 'Username already in use. Choose another one.'
             })
             return
         }
@@ -59,14 +63,16 @@ authRoutes.post('/signup', (req, res, next) => {
                 res.status(400).json({
                     message: 'Saving user to database went wrong.'
                 })
-                return  
+                return
             }
             console.log("User created succesfully!")
 
-              // Automatically log in user after sign up
+            // Automatically log in user after sign up
             req.login(NewUser, (err) => {
                 if (err) {
-                    res.status(500).json({ message: 'Login after signup went bad.' })
+                    res.status(500).json({
+                        message: 'Login after signup went bad.'
+                    })
                     return;
                 }
                 res.status(200).json(NewUser);
@@ -74,5 +80,53 @@ authRoutes.post('/signup', (req, res, next) => {
         })
     })
 })
+
+//Ruta POST login
+authRoutes.post('/login', async (req, res, next) => {
+    const {
+        email,
+        password
+    } = req.body;
+    //Comprobacion de que ambos campos han sido rellenados
+    if (email === '' || password === '') {
+        res.status(400).json({
+            errorMessage: 'Please provide both fields to continue'
+        });
+        return;
+    }
+    //Asegurar formato email
+    const emailRegex = /^\S+@\S+\.\S+$/
+    if (!emailRegex.test(email)) {
+        res.status(400).json({
+            message: "Invalid email format, please try again."
+        })
+        return
+    }
+    const user = await User.findOne({
+        email
+    })
+    //Comprobacion de que el email esta registrado
+    if (!user) {
+        res.status(400).json({
+            errorMessage: 'This email is not registered, please try again'
+        })
+        return
+        //Comprobacion de contraseña  
+    } else if (await bcrypt.compare(password, user.passwordHash)) {
+        req.session.currentUser = user
+        res.status(200).json({
+            message: "Loged in succesfully"
+        })
+    } else {
+        res.status(400).json({
+            errorMessage: 'Wrong password, please try again.'
+        })
+    }
+})
+    //Ruta POST logout
+authRoutes.post('/logout', (req, res, next) => {
+    req.session.destroy()
+    console.log(session)
+  })
 
 module.exports = authRoutes
