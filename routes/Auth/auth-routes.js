@@ -54,14 +54,15 @@ authRoutes.post('/signup', (req, res, next) => {
             passwordHash: hashPass
         });
         NewUser.save(err => {
+            console.log('ERROR AL CREAR EL USER', err)
             if (err) {
                 res.status(400).json({
                     message: 'Saving user to database went wrong.'
                 })
                 return  
-            } else {
-                console.log("User created succesfully!")
             }
+            console.log("User created succesfully!")
+
               // Automatically log in user after sign up
             req.login(NewUser, (err) => {
                 if (err) {

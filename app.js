@@ -10,6 +10,11 @@ const logger       = require('morgan');
 const path         = require('path');
 const cors         = require('cors');
 
+const session       = require('express-session');
+
+const passport      = require('passport');
+require('./configs/passport');
+
 mongoose
   .connect('mongodb://localhost/final-project', {useNewUrlParser: true})
   .then(x => {
@@ -52,6 +57,19 @@ app.use(
     origin: ['http://localhost:3001', 'http://localhost:3000'] // <== aceptar llamadas desde este dominio
   })
 );
+
+// ADD SESSION SETTINGS HERE:
+app.use(session({
+  secret:"some secret goes here",
+  resave: true,
+  saveUninitialized: true
+}));
+
+//Passport
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // ROUTES MIDDLEWARE STARTS HERE:
 const index = require('./routes/index');
 const providerRoute = require('./routes/provider')
