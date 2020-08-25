@@ -10,6 +10,10 @@ const logger       = require('morgan');
 const path         = require('path');
 const cors         = require('cors');
 
+const session       = require('express-session');
+
+const passport      = require('passport');
+require('./configs/passport');
 
 mongoose
   .connect('mongodb://localhost/final-project', {useNewUrlParser: true})
@@ -38,28 +42,14 @@ app.use(require('node-sass-middleware')({
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
-      
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-
-
-// Cors
-app.use(
-  cors({
-    credentials: true,
-    origin: ['http://localhost:3001'] // <== permitir llamadas de este origen
-  })
-);
-
-
-
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
 // ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 app.use(
   cors({
@@ -68,18 +58,27 @@ app.use(
   })
 );
 
+// ADD SESSION SETTINGS HERE:
+app.use(session({
+  secret:"some secret goes here",
+  resave: true,
+  saveUninitialized: true
+}));
+
+//Passport
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // ROUTES MIDDLEWARE STARTS HERE:
-
 const index = require('./routes/index');
 const providerRoute = require('./routes/provider')
 const productRoute = require("./routes/product")
+const authRoutes = require('./routes/Auth/auth-routes')
 
 app.use('/', index);
-app.use('/api', providerRoute);
+app.use('/api', providerRoute)
 app.use("/api", productRoute)
-
-
-
+app.use('/api', authRoutes)
 
 module.exports = app;
