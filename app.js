@@ -46,10 +46,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
-// en el archivo app.js:
-// más o menos en el area donde están los middlewares:
-// const cors = require('cors');
-// ...
+
+// Cors
 app.use(
   cors({
     credentials: true,
