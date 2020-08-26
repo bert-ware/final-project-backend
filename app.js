@@ -85,10 +85,12 @@ const index = require('./routes/index');
 const providerRoute = require('./routes/provider')
 const productRoute = require("./routes/product")
 const authRoutes = require('./routes/Auth/auth-routes')
+const recipeRoutes = require("./routes/recipes")
 
 app.use('/', index);
 app.use('/api', providerRoute)
 app.use("/api", productRoute)
 app.use('/api', authRoutes)
+app.use("/api", recipeRoutes)
 
 module.exports = app;
