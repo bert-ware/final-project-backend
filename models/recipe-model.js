@@ -2,6 +2,7 @@
 const { Schema,model, Mongoose} = require('mongoose')
 const mongoose = require('mongoose')
 
+
 const recipeSchema = new Schema ({
 
     name: {
@@ -10,7 +11,10 @@ const recipeSchema = new Schema ({
         required: true,
         unique: true
     },
-    ingredients: [Product],
+    ingredients: [],
+    method : {
+        enum: ["Shake", "Stir", "Throw", "Muddle"]
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

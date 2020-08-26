@@ -62,33 +62,32 @@ router.put('/providers/:id', (req, res, next) => {
   Provider.findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
       res.json({
-        message: `provider with ${req.params.id} is updated successfully.`
-      });
+        message: `Provider with ${req.params.id} updated successfully.`
+      })
     })
     .catch(error => {
-      res.json(error);
-    });
-});
+      res.json(error)
+    })
+})
 
 // DELETE route => to delete a specific provider
 router.delete('/providers/:id', (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({
       message: 'Specified id is not valid'
-    });
-    return;
+    })
+    return
   }
-
   Provider.findByIdAndRemove(req.params.id)
     .then(() => {
       res.json({
-        message: `Provider with ${req.params.id} is removed successfully.`
-      });
+        message: `Provider with ${req.params.id} removed successfully.`
+      })
     })
     .catch(error => {
-      res.json(error);
-    });
-});
+      res.json(error)
+    })
+})
 
 
 module.exports = router
