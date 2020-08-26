@@ -1,5 +1,6 @@
 //Provider Schema
-const { Schema, model } = require("mongoose");
+const { Schema, model, Mongoose } = require("mongoose")
+const mongoose = require('mongoose')
 
 const providerSchema = new Schema({
   name: {
@@ -26,6 +27,10 @@ const providerSchema = new Schema({
   info: {
     type: String,
   },
+  userID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+} 
 });
 
 module.exports = model("Provider", providerSchema);

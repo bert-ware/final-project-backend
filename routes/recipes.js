@@ -22,7 +22,8 @@ router.post('/recipes', (req, res, next) => {
         name: req.body.name,
         //REVISAR
         ingredients: req.body.ingredients,
-        method : req.body.method.enum
+        //REVISAR
+        method : req.body.method
       })
       .then(response => {
         console.log(response)
