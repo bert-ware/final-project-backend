@@ -7,6 +7,7 @@ const Recipe = require("../models/recipe-model")
 // GET route => to find and return all recipes list
 router.get('/recipes', (req, res, next) => {
     Recipe.find()
+    .populate("ingredients")
       .then(recipes => {
         console.log(recipes)
         res.json(recipes)
@@ -20,9 +21,7 @@ router.get('/recipes', (req, res, next) => {
 router.post('/recipes', (req, res, next) => {
     Recipe.create({
         name: req.body.name,
-        //REVISAR
         ingredients: req.body.ingredients,
-        //REVISAR
         method : req.body.method
       })
       .then(response => {
@@ -38,6 +37,7 @@ router.post('/recipes', (req, res, next) => {
 router.get('/recipes/:id', (req, res, next) => {
     console.log(req.params.id)
     Recipe.findById(req.params.id)
+    .populate("ingredients")
       .then(recipe => {
         console.log(recipe)
         res.json(recipe)

@@ -27,6 +27,7 @@ router.post('/providers', (req, res, next) => {
 // GET route => to find and return all provider list
 router.get('/providers', (req, res, next) => {
   Provider.find()
+  .populate("userID")
     .then(providers => {
       console.log(providers)
       res.json(providers)
@@ -40,6 +41,7 @@ router.get('/providers', (req, res, next) => {
 router.get('/providers/:id', (req, res, next) => {
   console.log(req.params.id)
   Provider.findById(req.params.id)
+  .populate("userId")
     .then(provider => {
       console.log(provider)
       res.json(provider)
