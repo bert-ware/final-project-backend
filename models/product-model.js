@@ -23,7 +23,7 @@ const productSchema = new Schema ({
     info: {
         type: String
     },
-    idprovider: {
+    idProvider: {
         type: mongoose.Schema.Types.ObjectID,
         ref: "Provider"
     }
