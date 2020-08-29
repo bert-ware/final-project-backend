@@ -125,9 +125,10 @@ authRoutes.post('/login', async (req, res, next) => {
     }
 })
     //Ruta POST logout
-authRoutes.post('/logout', (req, res, next) => {
-    req.session.destroy()
-  })
+    authRoutes.post('/logout', (req, res, next) => {
+        req.logout();
+        res.status(200).json({ message: 'Log out success!' });
+      })
 
   authRoutes.get('/loggedin', (req, res, next) => {
     if (req.isAuthenticated()) {
