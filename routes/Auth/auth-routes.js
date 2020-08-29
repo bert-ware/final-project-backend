@@ -7,6 +7,7 @@ const session = require('express-session')
 
 const User = require('../../models/user-model')
 
+//POST SIGNUP
 authRoutes.post('/signup', (req, res, next) => {
     const username = req.body.name
     const email = req.body.email
@@ -51,7 +52,7 @@ authRoutes.post('/signup', (req, res, next) => {
         }
         //Password encryptation
         const salt = bcrypt.genSaltSync(10);
-        const hashPass = bcrypt.hashSync(password, salt);
+        const hashPass = bcrypt.hashSync(password, salt)
         const NewUser = new User({
             name: username,
             email: email,
@@ -73,10 +74,10 @@ authRoutes.post('/signup', (req, res, next) => {
                     res.status(500).json({
                         message: 'Login after signup went bad.'
                     })
-                    return;
+                    return
                 }
-                res.status(200).json(NewUser);
-            });
+                res.status(200).json(NewUser)
+            })
         })
     })
 })
@@ -86,7 +87,7 @@ authRoutes.post('/login', async (req, res, next) => {
     const {
         email,
         password
-    } = req.body;
+    } = req.body
     //Comprobacion de que ambos campos han sido rellenados
     if (email === '' || password === '') {
         res.status(400).json({
@@ -124,9 +125,17 @@ authRoutes.post('/login', async (req, res, next) => {
     }
 })
     //Ruta POST logout
-authRoutes.post('/logout', (req, res, next) => {
-    req.session.destroy()
-    console.log(session)
-  })
+    authRoutes.post('/logout', (req, res, next) => {
+        req.logout();
+        res.status(200).json({ message: 'Log out success!' });
+      })
+
+  authRoutes.get('/loggedin', (req, res, next) => {
+    if (req.isAuthenticated()) {
+        res.status(200).json(req.user)
+        return
+    }
+    res.status(403).json({ message: 'Unauthorized' })
+  });
 
 module.exports = authRoutes
