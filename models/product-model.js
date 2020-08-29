@@ -18,15 +18,16 @@ const productSchema = new Schema ({
         required: true
     },
     format: {
-        type: String,
+        type: Number,
+        required: true
     },
     info: {
         type: String
     },
-    idProvider: {
+    /* idProvider: {
         type: mongoose.Schema.Types.ObjectID,
         ref: "Provider"
-    }
+    } */
 
 })
 

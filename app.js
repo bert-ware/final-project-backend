@@ -4,7 +4,6 @@ const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express      = require('express');
 const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
 const mongoose     = require('mongoose'); 
 const logger       = require('morgan');
 const path         = require('path');
@@ -55,30 +54,25 @@ app.use(
     credentials: true,
     origin: ['http://localhost:3001', 'http://localhost:3000'] // <== aceptar llamadas desde este dominio
   })
-);
+)
 
-// ADD SESSION SETTINGS HERE:
-/* app.use(session({
-  secret:"some secret goes here",
-  resave: true,
-  saveUninitialized: true
-})); */
+//Passport
+app.use(passport.initialize())
+app.use(passport.session())
 
 // ADD SESSION SETTINGS HERE:
 const createSession = require("./configs/session")
 createSession(app)
 app.use(function (req, res, next) {
-  res.locals.session = req.session;
+  res.locals.session = req.session
   try {
-    req.session.currentUser = req.session.passport.user;
+    req.session.currentUser = req.session.passport.user
   } catch {
     }
-  next();
+  next()
 })
 
-//Passport
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // ROUTES MIDDLEWARE STARTS HERE:
 const index = require('./routes/index');

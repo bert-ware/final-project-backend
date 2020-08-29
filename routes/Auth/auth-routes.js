@@ -66,7 +66,7 @@ authRoutes.post('/signup', (req, res, next) => {
                 })
                 return
             }
-            console.log("User created succesfully!")
+            console.log("User created succesfully!", NewUser)
 
             // Automatically log in user after sign up
             req.login(NewUser, (err) => {
@@ -92,8 +92,8 @@ authRoutes.post('/login', async (req, res, next) => {
     if (email === '' || password === '') {
         res.status(400).json({
             errorMessage: 'Please provide both fields to continue'
-        });
-        return;
+        })
+        return
     }
     //Asegurar formato email
     const emailRegex = /^\S+@\S+\.\S+$/
@@ -115,9 +115,9 @@ authRoutes.post('/login', async (req, res, next) => {
         //Comprobacion de contraseña  
     } else if (await bcrypt.compare(password, user.passwordHash)) {
         req.session.currentUser = user
-        res.status(200).json({
-            message: "Loged in succesfully"
-        })
+        res.status(200).json(
+            user
+        )
     } else {
         res.status(400).json({
             errorMessage: 'Wrong password, please try again.'
@@ -129,9 +129,13 @@ authRoutes.post('/login', async (req, res, next) => {
         req.logout();
         res.status(200).json({ message: 'Log out success!' });
       })
-
+      //Ruta Loggedin
   authRoutes.get('/loggedin', (req, res, next) => {
+      console.log(req.isAuthenticated())
+      console.log(req.user)
+      console.log(req.session)
     if (req.isAuthenticated()) {
+        
         res.status(200).json(req.user)
         return
     }

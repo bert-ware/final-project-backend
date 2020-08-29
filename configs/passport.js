@@ -33,6 +33,7 @@ passport.use(new LocalStrategy((email, password, next) => {
       next(null, false, { message: 'Incorrect password.' })
       return
     }
+    console.log("usuario encontrado:", foundUser)
     next(null, foundUser)
   })
 }))

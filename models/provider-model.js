@@ -1,6 +1,7 @@
 //Provider Schema
 const { Schema, model, Mongoose } = require("mongoose")
 const mongoose = require('mongoose')
+const User = require("../models/user-model")
 
 const providerSchema = new Schema({
   name: {
