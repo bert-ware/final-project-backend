@@ -1,7 +1,7 @@
-const User          = require('../models/user-model')
+const User = require('../models/user-model')
 const LocalStrategy = require('passport-local').Strategy
-const bcrypt        = require('bcryptjs')
-const passport      = require('passport')
+const bcrypt = require('bcryptjs') 
+const passport = require('passport')
 
 passport.serializeUser((loggedInUser, cb) => {
   cb(null, loggedInUser._id)
@@ -11,29 +11,64 @@ passport.deserializeUser((userIdFromSession, cb) => {
   User.findById(userIdFromSession, (err, userDocument) => {
     if (err) {
       cb(err)
-      return;
+      return
     }
     cb(null, userDocument)
   })
 })
 
-passport.use(new LocalStrategy((email, password, next) => {
-  User.findOne({ email }, (err, foundUser) => {
-    if (err) {
-      next(err)
-      return;
-    }
+passport.use(
+  
+  new LocalStrategy({ passReqToCallback: true }, (req, email, password, callback) => {
+      console.log("este es el email", email)
+    User.findOne({ email })
+    .then(user => {
+      if (!user) {
+        console.log("could not find a user")
+        return callback(null, false, { message: 'Incorrect email' })
+      }
+      if (!bcrypt.compareSync(password, user.passwordHash)) {
+        console.log("password doesn't match")
+        return callback(null, false, { message: 'Incorrect password' })
+      }
+      console.log("everything OK with the authentication...")
 
-   if (!foundUser) {
-      next(null, false, { message: 'Incorrect username.' })
-      return
-    }
+      req.session.user = user
 
-   if (!bcrypt.compareSync(password, foundUser.password)) {
-      next(null, false, { message: 'Incorrect password.' })
-      return
-    }
-    console.log("usuario encontrado:", foundUser)
-    next(null, foundUser)
+      callback(null, user)
+    })
+    .catch(error => {
+      console.log("Something went wrong with the authentication...")
+      callback(error)
+    })
   })
-}))
+)
+
+/* passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback"
+    },
+    (accessToken, refreshToken, profile, done) => {
+      // to see the structure of the data in received response:
+      console.log("Google account details:", profile)
+
+      User.findOne({ googleID: profile.id })
+        .then(user => {
+          if (user) {
+            done(null, user)
+            return
+          }
+
+          User.create({ googleID: profile.id, fullName: profile.displayName, avatar: profile.photos[0].value })
+            .then(newUser => {
+              done(null, newUser)
+            })
+            .catch(err => done(err)) // closes User.create()
+        })
+        .catch(err => done(err)) // closes User.findOne()
+    }
+  )
+) */

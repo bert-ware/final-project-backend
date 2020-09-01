@@ -4,7 +4,6 @@ const passport = require('passport')
 const bcrypt = require('bcryptjs');
 const session = require('express-session')
 
-
 const User = require('../../models/user-model')
 
 //POST SIGNUP
@@ -16,7 +15,7 @@ authRoutes.post('/signup', (req, res, next) => {
         res.status(400).json({
             message: 'Please provide username, email and password'
         })
-        return;
+        return
     }
     //Validar seguridad contraseña 
     const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
@@ -35,9 +34,7 @@ authRoutes.post('/signup', (req, res, next) => {
         return
     }
 
-    User.findOne({
-        username
-    }, (err, foundUser) => {
+    User.findOne({ username}, (err, foundUser) => {
         if (err) {
             res.status(500).json({
                 message: "Username check went bad."
@@ -57,9 +54,8 @@ authRoutes.post('/signup', (req, res, next) => {
             name: username,
             email: email,
             passwordHash: hashPass
-        });
+        })
         NewUser.save(err => {
-            console.log('ERROR AL CREAR EL USER', err)
             if (err) {
                 res.status(400).json({
                     message: 'Saving user to database went wrong.'
@@ -67,63 +63,39 @@ authRoutes.post('/signup', (req, res, next) => {
                 return
             }
             console.log("User created succesfully!", NewUser)
-
-            // Automatically log in user after sign up
-            req.login(NewUser, (err) => {
-                if (err) {
-                    res.status(500).json({
-                        message: 'Login after signup went bad.'
-                    })
-                    return
-                }
-                res.status(200).json(NewUser)
-            })
+            res.json(NewUser)
         })
     })
 })
 
 //Ruta POST login
-authRoutes.post('/login', async (req, res, next) => {
-    const {
-        email,
-        password
-    } = req.body
-    //Comprobacion de que ambos campos han sido rellenados
-    if (email === '' || password === '') {
-        res.status(400).json({
-            errorMessage: 'Please provide both fields to continue'
+authRoutes.post('/login', (req, res, next) => {
+    console.log("entra?")
+    passport.authenticate('local', (err, theUser, failureDetails) => {
+        console.log("This is the callback function passport will call after authentication...")
+
+        if (err) {
+          res.status(500).json({ message: 'Something went wrong authenticating user' })
+          console.log(err)
+          return
+        }
+        if (!theUser) {
+          res.status(401).json(failureDetails)
+          return
+        }
+        console.log("Login successful")
+       
+        req.login(theUser, (err) => {
+          if (err) {
+            res.status(500).json({ message: 'Session save went bad.' })
+            return
+          }
+          //Respuesta que contiene el usuario
+          res.status(200).json(theUser)
         })
-        return
-    }
-    //Asegurar formato email
-    const emailRegex = /^\S+@\S+\.\S+$/
-    if (!emailRegex.test(email)) {
-        res.status(400).json({
-            message: "Invalid email format, please try again."
-        })
-        return
-    }
-    const user = await User.findOne({
-        email
+      })(req, res, next)
     })
-    //Comprobacion de que el email esta registrado
-    if (!user) {
-        res.status(400).json({
-            errorMessage: 'This email is not registered, please try again'
-        })
-        return
-        //Comprobacion de contraseña  
-    } else if (await bcrypt.compare(password, user.passwordHash)) {
-        req.session.currentUser = user
-        res.status(200).json(
-            user
-        )
-    } else {
-        res.status(400).json({
-            errorMessage: 'Wrong password, please try again.'
-        })
-    }
-})
+
     //Ruta POST logout
     authRoutes.post('/logout', (req, res, next) => {
         req.logout();

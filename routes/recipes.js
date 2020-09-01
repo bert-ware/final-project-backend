@@ -23,7 +23,7 @@ router.post('/recipes', (req, res, next) => {
         name: req.body.name,
         ingredients: req.body.ingredients,
         method : req.body.method,
-        userID: req.session.currentUser._id
+      // userID: req.session.currentUser._id
       })
       .then(response => {
         console.log(response)
