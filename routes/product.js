@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router()
 
 const Product = require('../models/product-model')
+const Provider = require("../models/provider-model")
 
 // Post route => to create one product
 router.post('/products', (req, res, next) => {
@@ -11,7 +12,8 @@ router.post('/products', (req, res, next) => {
       graduation: req.body.graduation,
       price: req.body.price,
       format: req.body.format,
-      info: req.body.info
+      info: req.body.info,
+     // idProvider: req.Provider._id
     })
     .then(response => {
       console.log(response)
@@ -25,7 +27,7 @@ router.post('/products', (req, res, next) => {
 // GET route => to find and return all product list
 router.get('/products', (req, res, next) => {
   Product.find()
-  .populate(idProvider)
+ // .populate(idProvider)
     .then(products => {
       console.log(products)
       res.json(products)
@@ -39,7 +41,7 @@ router.get('/products', (req, res, next) => {
 router.get('/products/:id', (req, res, next) => {
   console.log(req.params.id)
   Product.findById(req.params.id)
-  .populate(idProvider)
+  //.populate(idProvider)
     .then(product => {
       console.log(product)
       res.json(product)

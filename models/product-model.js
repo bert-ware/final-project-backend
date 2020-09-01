@@ -1,5 +1,5 @@
 //Product schema
-const { Schema,model, Mongoose} = require('mongoose')
+const { Schema,model} = require('mongoose')
 const mongoose = require('mongoose')
 
 const productSchema = new Schema ({
@@ -18,12 +18,13 @@ const productSchema = new Schema ({
         required: true
     },
     format: {
-        type: String,
+        type: Number,
+        required: true
     },
     info: {
         type: String
     },
-    idProvider: {
+    Provider: {
         type: mongoose.Schema.Types.ObjectID,
         ref: "Provider"
     }

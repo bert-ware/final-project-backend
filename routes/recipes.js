@@ -22,7 +22,8 @@ router.post('/recipes', (req, res, next) => {
     Recipe.create({
         name: req.body.name,
         ingredients: req.body.ingredients,
-        method : req.body.method
+        method : req.body.method,
+      // userID: req.session.currentUser._id
       })
       .then(response => {
         console.log(response)

@@ -15,5 +15,5 @@ module.exports = app => {
         ttl: 60 * 60 * 24 
       })
     })
-  );
-};
+  )
+}
