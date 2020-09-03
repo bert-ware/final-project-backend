@@ -26,7 +26,10 @@ const recipeSchema = new Schema ({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
       },
-     
+    recipeImgUrl: {
+        type: String,
+        default: "https://i.pinimg.com/originals/8b/8b/96/8b8b96ac1e356809ea9ccdd1d3232304.jpg  "
+      }, 
 })
 
 module.exports = model('Recipe', recipeSchema)

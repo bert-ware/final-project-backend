@@ -27,7 +27,11 @@ const productSchema = new Schema ({
     Provider: {
         type: mongoose.Schema.Types.ObjectID,
         ref: "Provider"
-    }
+    },
+    productImgUrl: {
+        type: String,
+        default: "https://image.freepik.com/free-vector/whisky-liquor-bottles-icons-set_100011-183.jpg"
+      } 
 
 })
 

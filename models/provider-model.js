@@ -31,7 +31,11 @@ const providerSchema = new Schema({
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
+},
+  providerImgUrl: {
+  type: String,
+  default: "https://images.clipartlogo.com/files/istock/previews/8063/80633763-delivery-man-with-water-vector-illustration.jpg"
 } 
-});
+})
 
 module.exports = model("Provider", providerSchema);
