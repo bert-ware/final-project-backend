@@ -23,10 +23,10 @@ const productSchema = new Schema ({
     info: {
         type: String
     },
-    idProvider: {
-        type: mongoose.Schema.Types.ObjectID,
-        ref: "Provider"
-    }
+    // idProvider: {
+    //     type: mongoose.Schema.Types.ObjectID,
+    //     ref: "Provider"
+    // }
 
 })
 
