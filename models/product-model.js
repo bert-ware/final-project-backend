@@ -15,7 +15,7 @@ const productSchema = new Schema ({
     },
     price : {
         type: Number,
-        required: true
+        required: [true, "Price is a mandatory field"]
     },
     format: {
         type: Number,

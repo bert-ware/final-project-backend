@@ -15,7 +15,10 @@ const recipeSchema = new Schema ({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product"
         },
-            quantity : Number 
+            quantity : {
+                type: Number,
+                required: true
+            }
     }],
     method : {
         type: String,

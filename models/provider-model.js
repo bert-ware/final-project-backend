@@ -7,30 +7,31 @@ const providerSchema = new Schema({
   name: {
     type: String,
     trim: true,
-    required: true,
-    unique: true,
+    required: [true, "Name is a mandatory field"],
+    unique: [true, "Name already in use"]
   },
   adress: {
     street: {
       type: String,
       trim: true,
-      required: true,
+      required: [true, "Please provide an adress"]
     },
     number: {
       type: Number,
-      required: true,
     }
   },
   telephone: {
     type: Number,
     required: true,
+    match :[/^((\+)?)([\s-.\(\)]*\d{1}){8,13}$/, "Invalid phone format"]
   },
   info: {
     type: String,
   },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required: true
 },
   providerImgUrl: {
   type: String,

@@ -5,14 +5,14 @@ const userSchema = new Schema({
     name: {
     type: String,
     trim: true,
-    required: [true, "El nombre de usuario es requerido :) ."],
+    required: [true, "Username is a mandatory field"],
     unique: true
   },
     email: {
     type: String,
-    required: [true, "El email es requerido :) ."],
+    required: [true, "Email is a mandatory field"],
     //asegurar formato email desde el servidor
-    match: [/^\S+@\S+\.\S+$/, 'Dirección de correo inválida, revise su dirección de correo :) .'],
+    match: [/^\S+@\S+\.\S+$/, 'Invalid Email format, please check again'],
     unique: true,
     lowercase: true,
     trim: true
@@ -23,7 +23,7 @@ const userSchema = new Schema({
     //Password property 
     passwordHash: {
     type: String,
-    required: [true, "La contraseña es un campo requerido :) ."]
+    required: [true, "Password is a mandatory fiel"]
   },
   userImgUrl: {
     type: String,
