@@ -8,6 +8,7 @@ passport.serializeUser((loggedInUser, cb) => {
 })
 
 passport.deserializeUser((userIdFromSession, cb) => {
+  console.log("deserializeUser", userIdFromSession)
   User.findById(userIdFromSession, (err, userDocument) => {
     if (err) {
       cb(err)

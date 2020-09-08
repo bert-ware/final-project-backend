@@ -83,7 +83,7 @@ authRoutes.post('/login', (req, res, next) => {
           res.status(401).json(failureDetails)
           return
         }
-        console.log("Login successful")
+        console.log("Login successful", theUser)
        
         req.login(theUser, (err) => {
           if (err) {

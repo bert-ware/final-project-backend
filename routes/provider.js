@@ -14,7 +14,7 @@ router.post('/providers', (req, res, next) => {
       },
       telephone: req.body.telephone,
       info: req.body.info,
-      userID: req.session.currentUser._id
+      userID: req.session.user._id
     })
     .then(response => {
       console.log(response)
@@ -27,7 +27,10 @@ router.post('/providers', (req, res, next) => {
 })
 // GET route => to find and return all provider list
 router.get('/providers', (req, res, next) => {
-  Provider.find()
+  console.log(req.user)
+  console.log(req.session.user)
+  console.log(req.session)
+  Provider.find({userID: req.session.user._id})
   .populate("userID")
     .then(providers => {
       console.log(providers)
