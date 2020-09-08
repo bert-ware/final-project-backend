@@ -1,5 +1,5 @@
 //Recipe schema
-const { Schema,model, Mongoose} = require('mongoose')
+const { Schema,model} = require('mongoose')
 const mongoose = require('mongoose')
 
 
@@ -11,19 +11,28 @@ const recipeSchema = new Schema ({
         unique: true
     },
     ingredients: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product"
+        },
+            quantity : {
+                type: Number,
+                required: true
+            }
     }],
     method : {
         type: String,
         enum: ["Shake", "Stir", "Throw", "Muddle"],
         default: ""
     },
-    userId: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
       },
-     
+    recipeImgUrl: {
+        type: String,
+        default: "https://i.pinimg.com/originals/8b/8b/96/8b8b96ac1e356809ea9ccdd1d3232304.jpg  "
+      }, 
 })
 
 module.exports = model('Recipe', recipeSchema)

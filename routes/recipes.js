@@ -3,11 +3,12 @@ const mongoose = require('mongoose')
 const router = express.Router()
 
 const Recipe = require("../models/recipe-model")
+const Product = require("../models/product-model")
 
 // GET route => to find and return all recipes list
 router.get('/recipes', (req, res, next) => {
     Recipe.find()
-    .populate("ingredients")
+    .populate("ingredients.product")
       .then(recipes => {
         console.log(recipes)
         res.json(recipes)
@@ -22,7 +23,8 @@ router.post('/recipes', (req, res, next) => {
     Recipe.create({
         name: req.body.name,
         ingredients: req.body.ingredients,
-        method : req.body.method
+        method : req.body.method,
+      // userID: req.session.currentUser._id
       })
       .then(response => {
         console.log(response)
@@ -37,7 +39,7 @@ router.post('/recipes', (req, res, next) => {
 router.get('/recipes/:id', (req, res, next) => {
     console.log(req.params.id)
     Recipe.findById(req.params.id)
-    .populate("ingredients")
+    .populate("ingredients.product")
       .then(recipe => {
         console.log(recipe)
         res.json(recipe)

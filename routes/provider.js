@@ -13,7 +13,8 @@ router.post('/providers', (req, res, next) => {
         number: req.body.adress.number
       },
       telephone: req.body.telephone,
-      info: req.body.info
+      info: req.body.info,
+      userID: req.session.currentUser._id
     })
     .then(response => {
       console.log(response)

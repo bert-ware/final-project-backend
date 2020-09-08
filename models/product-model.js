@@ -1,5 +1,5 @@
 //Product schema
-const { Schema,model, Mongoose} = require('mongoose')
+const { Schema,model} = require('mongoose')
 const mongoose = require('mongoose')
 
 const productSchema = new Schema ({
@@ -8,25 +8,31 @@ const productSchema = new Schema ({
         type: String,
         trim: true,
         required: true,
-        unique: true
-    },
-    graduation: {
-        type: Number,
     },
     price : {
         type: Number,
+        required: [true, "Price is a mandatory field"]
+    },
+    typeFormat: {
+        type : String,
+        enum : ["Kilogram", "Mililiters"],
         required: true
     },
     format: {
-        type: String,
-    },
+        type: Number,
+        required: true
+    },     
     info: {
         type: String
     },
-    // idProvider: {
-    //     type: mongoose.Schema.Types.ObjectID,
-    //     ref: "Provider"
-    // }
+    Provider: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: "Provider"
+    },
+    productImgUrl: {
+        type: String,
+        default: "https://images.clipartlogo.com/files/istock/previews/1846/18463337-liquor-bottle.jpg"
+      } 
 
 })
 
