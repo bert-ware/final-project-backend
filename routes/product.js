@@ -9,8 +9,8 @@ const Provider = require("../models/provider-model")
 router.post('/products', (req, res, next) => {
   Product.create({
       name: req.body.name,
-      graduation: req.body.graduation,
       price: req.body.price,
+      typeFormat: req.body.typeFormat,
       format: req.body.format,
       info: req.body.info,
      // idProvider: req.Provider._id
@@ -19,7 +19,7 @@ router.post('/products', (req, res, next) => {
       console.log(response)
       res.json(response)
     })
-    .catch(erroror => {
+    .catch(error => {
       console.log(error)
       res.json(error)
     })

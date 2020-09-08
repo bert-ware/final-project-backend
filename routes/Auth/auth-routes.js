@@ -72,7 +72,7 @@ authRoutes.post('/signup', (req, res, next) => {
 authRoutes.post('/login', (req, res, next) => {
     console.log("entra?")
     passport.authenticate('local', (err, theUser, failureDetails) => {
-        console.log("This is the callback function passport will call after authentication...")
+        
 
         if (err) {
           res.status(500).json({ message: 'Something went wrong authenticating user' })

@@ -8,19 +8,20 @@ const productSchema = new Schema ({
         type: String,
         trim: true,
         required: true,
-        unique: true
-    },
-    graduation: {
-        type: Number,
     },
     price : {
         type: Number,
         required: [true, "Price is a mandatory field"]
     },
+    typeFormat: {
+        type : String,
+        enum : ["Kilogram", "Mililiters"],
+        required: true
+    },
     format: {
         type: Number,
         required: true
-    },
+    },     
     info: {
         type: String
     },
@@ -30,7 +31,7 @@ const productSchema = new Schema ({
     },
     productImgUrl: {
         type: String,
-        default: "https://image.freepik.com/free-vector/whisky-liquor-bottles-icons-set_100011-183.jpg"
+        default: "https://images.clipartlogo.com/files/istock/previews/1846/18463337-liquor-bottle.jpg"
       } 
 
 })
