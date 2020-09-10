@@ -17,10 +17,6 @@ const userSchema = new Schema({
     lowercase: true,
     trim: true
   },
-    // Preset login redes
-    //googleID: String,
-    //facebookID:String,
-    //Password property 
     passwordHash: {
     type: String,
     required: [true, "Password is a mandatory fiel"]
@@ -28,7 +24,11 @@ const userSchema = new Schema({
   userImgUrl: {
     type: String,
     default: "https://img.favpng.com/24/15/4/computer-icons-avatar-user-profile-blog-png-favpng-9wEFLzf04C5m4ShX8e57uczCy.jpg"
-  }
+  },
+     // Preset login redes
+    //googleID: String,
+    //facebookID:String,
+    //Password property 
 })
 
 module.exports = model('User', userSchema)
