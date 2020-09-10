@@ -13,7 +13,7 @@ router.post('/products', (req, res, next) => {
       typeFormat: req.body.typeFormat,
       format: req.body.format,
       info: req.body.info,
-      idProvider: req.Provider._id
+      Provider: req.body.Provider
     })
     .then(response => {
       console.log(response)
@@ -27,7 +27,7 @@ router.post('/products', (req, res, next) => {
 // GET route => to find and return all product list
 router.get('/products', (req, res, next) => {
   Product.find()
-    .populate(idProvider)
+    .populate("Provider")
     .then(products => {
       console.log(products)
       res.json(products)
@@ -41,7 +41,7 @@ router.get('/products', (req, res, next) => {
 router.get('/products/:id', (req, res, next) => {
   console.log(req.params.id)
   Product.findById(req.params.id)
-  //.populate(idProvider)
+  .populate("Provider")
     .then(product => {
       console.log(product)
       res.json(product)
