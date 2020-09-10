@@ -44,7 +44,7 @@ passport.use(
     })
   })
 )
-
+//GOOGLE
 /* passport.use(
   new GoogleStrategy(
     {
@@ -72,4 +72,34 @@ passport.use(
         .catch(err => done(err)) // closes User.findOne()
     }
   )
+) */
+// FACEBOOK
+/* passport.use(
+  new FacebookStrategy({
+      clientID: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      callbackURL: "/auth/facebook/callback"
+    },
+    (accessToken, refreshToken, profile, done) => {
+      console.log("Facebbok account details:", profile)
+      Usuario.findOne({
+          facebookID: profile.id
+        })
+        .then(user => {
+          if (user) {
+            done(null, user)
+            return;
+          }
+          Usuario.create({
+              facebookID: profile.id,
+              nombre: profile.displayName,
+              email: `${profile.id}@facebook.fake.com`
+            })
+            .then(newUser => {
+              done(null, newUser);
+            })
+            .catch(err => done(err)); // closes User.create()
+        })
+        .catch(err => done(err)); // closes User.findOne()
+    })
 ) */
