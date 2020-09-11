@@ -15,7 +15,7 @@ const productSchema = new Schema ({
     },
     typeFormat: {
         type : String,
-        enum : ["Kilogram", "Mililiters"],
+        enum : ["Kilogram", "Centiliters"],
         required: true
     },
     format: {
@@ -27,7 +27,8 @@ const productSchema = new Schema ({
     },
     Provider: {
         type: mongoose.Schema.Types.ObjectID,
-        ref: "Provider"
+        ref: "Provider",
+        required: true
     },
     productImgUrl: {
         type: String,
