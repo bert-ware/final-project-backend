@@ -3,7 +3,6 @@ const authRoutes = express.Router()
 const passport = require('passport')
 const bcrypt = require('bcryptjs');
 const session = require('express-session')
-
 const User = require('../../models/user-model')
 
 //POST SIGNUP
@@ -72,7 +71,6 @@ authRoutes.post('/signup', (req, res, next) => {
 authRoutes.post('/login', (req, res, next) => {
     console.log("entra?")
     passport.authenticate('local', (err, theUser, failureDetails) => {
-        
 
         if (err) {
           res.status(500).json({ message: 'Something went wrong authenticating user' })
@@ -99,7 +97,7 @@ authRoutes.post('/login', (req, res, next) => {
     //Ruta POST logout
     authRoutes.post('/logout', (req, res, next) => {
         req.logout();
-        res.status(200).json({ message: 'Log out success!' });
+        res.status(200).json({ message: 'Log out success!' })
       })
       //Ruta Loggedin
   authRoutes.get('/loggedin', (req, res, next) => {
@@ -112,6 +110,6 @@ authRoutes.post('/login', (req, res, next) => {
         return
     }
     res.status(403).json({ message: 'Unauthorized' })
-  });
+  })
 
 module.exports = authRoutes
