@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const router = express.Router()
+const uploader = require('../configs/cloudinary')
 
 const Provider = require('../models/provider-model')
 
@@ -91,6 +92,26 @@ router.delete('/providers/:id', (req, res, next) => {
       res.json(error)
     })
 })
+
+  // PUT route => to be used as provider fileuload endpoint
+  router.put('/providers/image/:id', uploader.single("myFile"), (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      res.status(400).json({
+        message: 'Specified id is not valid'
+      })
+      return
+    }
+    console.log(req.file)
+    Provider.findByIdAndUpdate(req.params.id, {providerImgUrl : req.file.path})
+      .then((provider) => {
+        res.json(
+            provider
+        )
+      })
+      .catch(error => {
+        res.json(error)
+      })
+  })
 
 
 module.exports = router
