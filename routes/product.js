@@ -58,8 +58,8 @@ router.put('/products/:id', (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({
       message: 'Specified id is not valid'
-    });
-    return;
+    })
+    return
   }
   Product.findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
@@ -68,7 +68,7 @@ router.put('/products/:id', (req, res, next) => {
       });
     })
     .catch(error => {
-      res.json(error);
+      res.json(error)
     });
 });
 

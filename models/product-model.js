@@ -15,7 +15,7 @@ const productSchema = new Schema ({
     },
     typeFormat: {
         type : String,
-        enum : ["Kilogram", "Centiliters"],
+        enum : ["Grams", "Centiliters"],
         required: true
     },
     format: {

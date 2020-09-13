@@ -4,6 +4,8 @@ const passport = require('passport')
 const bcrypt = require('bcryptjs');
 const session = require('express-session')
 const User = require('../../models/user-model')
+const mongoose = require('mongoose')
+const uploader = require('../../configs/cloudinary')
 
 //POST SIGNUP
 authRoutes.post('/signup', (req, res, next) => {
@@ -69,18 +71,20 @@ authRoutes.post('/signup', (req, res, next) => {
 
 //Ruta POST login
 authRoutes.post('/login', (req, res, next) => {
-    console.log("entra?")
-    passport.authenticate('local', (err, theUser, failureDetails) => {
+    passport.authenticate('local', (err, theUser) => {
 
+        
         if (err) {
           res.status(500).json({ message: 'Something went wrong authenticating user' })
           console.log(err)
           return
         }
         if (!theUser) {
-          res.status(401).json(failureDetails)
+          res.status(401).json({message: "Please provide valid both email and password"})
           return
         }
+
+        
         console.log("Login successful", theUser)
        
         req.login(theUser, (err) => {
@@ -110,6 +114,25 @@ authRoutes.post('/login', (req, res, next) => {
         return
     }
     res.status(403).json({ message: 'Unauthorized' })
+  })
+  // PUT route => to be used as user fileuload endpoint
+  authRoutes.put('/user/:id', uploader.single("myFile"), (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      res.status(400).json({
+        message: 'Specified id is not valid'
+      })
+      return
+    }
+    console.log(req.file)
+    User.findByIdAndUpdate(req.params.id, {userImgUrl : req.file.path})
+      .then((user) => {
+        res.json(
+            user
+        )
+      })
+      .catch(error => {
+        res.json(error)
+      })
   })
 
 module.exports = authRoutes
