@@ -88,7 +88,7 @@ router.delete('/recipes/:id', (req, res, next) => {
       })
   })
    // PUT route => to be used as recipe fileuload endpoint
-   router.put('/recipes/image/:id', uploader.single("myFile"), (req, res, next) => {
+   router.put('/recipes /image/:id', uploader.single("myFile"), (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({
         message: 'Specified id is not valid'
