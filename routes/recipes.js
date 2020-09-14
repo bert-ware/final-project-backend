@@ -31,8 +31,8 @@ router.post('/recipes', (req, res, next) => {
         res.json(response)
       })
       .catch(error => {
-        console.log('ESTE ES EL ERROR',error)
-        res.json(error)
+        res.status(400).json(error)
+        res.json(error.data.message)
       })
   })
   // GET route => to find and return an especific recipe

@@ -7,7 +7,7 @@ const recipeSchema = new Schema ({
     name: {
         type: String,
         trim: true,
-        required: true,
+        required: [true, "Please introduce a recipe name"],
         unique: true
     },
     ingredients: [{
@@ -23,7 +23,7 @@ const recipeSchema = new Schema ({
     method : {
         type: String,
         enum: ["Shake", "Stir", "Throw", "Muddle"],
-        default: ""
+        default: "Shake"
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,7 +32,7 @@ const recipeSchema = new Schema ({
       },
     recipeImgUrl: {
         type: String,
-        default: "https://i.pinimg.com/originals/8b/8b/96/8b8b96ac1e356809ea9ccdd1d3232304.jpg  "
+        default: "https://i.pinimg.com/originals/8b/8b/96/8b8b96ac1e356809ea9ccdd1d3232304.jpg"
       }, 
 })
 
