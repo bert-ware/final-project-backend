@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 mongoose
-  .connect('mongodb://localhost/final-project', {useNewUrlParser: true, useUnifiedTopology: true,
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true,
   useCreateIndex: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
