@@ -126,6 +126,7 @@ authRoutes.post('/login', (req, res, next) => {
     console.log(req.file)
     User.findByIdAndUpdate(req.params.id, {userImgUrl : req.file.path})
       .then((user) => {
+        user.userImgUrl = req.file.path
         res.json(
             user
         )
