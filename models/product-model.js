@@ -30,6 +30,11 @@ const productSchema = new Schema ({
         ref: "Provider",
         required: true
     },
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
     productImgUrl: {
         type: String,
         default: "https://images.clipartlogo.com/files/istock/previews/1846/18463337-liquor-bottle.jpg"
