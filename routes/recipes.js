@@ -7,7 +7,7 @@ const Product = require("../models/product-model")
 
 // GET route => to find and return all recipes list
 router.get('/recipes', (req, res, next) => {
-    Recipe.find()
+    Recipe.find({user: req.session.user._id})
     .populate("ingredients.product")
       .then(recipes => {
         console.log(recipes)
