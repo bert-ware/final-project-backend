@@ -102,7 +102,7 @@ router.delete('/products/:id', (req, res, next) => {
     return
   }
   console.log(req.file)
-  Product.findByIdAndUpdate(req.params.id, {productImgUrl : req.file.path})
+  Product.findByIdAndUpdate(req.params.id, {imgUrl : req.file.path})
     .then((product) => {
       res.json(
           product

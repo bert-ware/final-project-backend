@@ -30,7 +30,7 @@ const recipeSchema = new Schema ({
         ref: "User",
         required: true
       },
-    recipeImgUrl: {
+    imgUrl: {
         type: String,
         default: "https://i.pinimg.com/originals/8b/8b/96/8b8b96ac1e356809ea9ccdd1d3232304.jpg"
       }, 

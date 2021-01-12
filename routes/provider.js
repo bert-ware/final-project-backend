@@ -102,7 +102,7 @@ router.delete('/providers/:id', (req, res, next) => {
       return
     }
     console.log(req.file)
-    Provider.findByIdAndUpdate(req.params.id, {providerImgUrl : req.file.path})
+    Provider.findByIdAndUpdate(req.params.id, {imgUrl : req.file.path})
       .then((provider) => {
         res.json(
             provider

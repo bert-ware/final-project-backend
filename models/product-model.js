@@ -35,7 +35,7 @@ const productSchema = new Schema ({
         ref: "User",
         required: true
     },
-    productImgUrl: {
+    imgUrl: {
         type: String,
         default: "https://images.clipartlogo.com/files/istock/previews/1846/18463337-liquor-bottle.jpg"
       } 

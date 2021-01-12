@@ -96,7 +96,7 @@ router.delete('/recipes/:id', (req, res, next) => {
       return
     }
     console.log(req.file)
-    Recipe.findByIdAndUpdate(req.params.id, {recipeImgUrl : req.file.path})
+    Recipe.findByIdAndUpdate(req.params.id, {imgUrl : req.file.path})
       .then((recipe) => {
         res.json(
             recipe

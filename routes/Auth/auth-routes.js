@@ -116,7 +116,7 @@ authRoutes.post('/login', (req, res, next) => {
     res.status(403).json({ message: 'Unauthorized' })
   })
   // PUT route => to be used as user fileuload endpoint
-  authRoutes.put('/user/:id', uploader.single("myFile"), (req, res, next) => {
+  authRoutes.put('/user/image/:id', uploader.single("myFile"), (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({
         message: 'Specified id is not valid'
@@ -124,9 +124,9 @@ authRoutes.post('/login', (req, res, next) => {
       return
     }
     console.log(req.file)
-    User.findByIdAndUpdate(req.params.id, {userImgUrl : req.file.path})
+    User.findByIdAndUpdate(req.params.id, {imgUrl : req.file.path})
       .then((user) => {
-        user.userImgUrl = req.file.path
+        user.imgUrl = req.file.path
         res.json(
             user
         )

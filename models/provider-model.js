@@ -33,7 +33,7 @@ const providerSchema = new Schema({
     ref: "User",
     required: true
 },
-  providerImgUrl: {
+  imgUrl: {
   type: String,
   default: "https://images.clipartlogo.com/files/istock/previews/8063/80633763-delivery-man-with-water-vector-illustration.jpg"
 } 

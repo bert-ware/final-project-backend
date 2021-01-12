@@ -21,7 +21,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password is a mandatory fiel"]
   },
-  userImgUrl: {
+  imgUrl: {
     type: String,
     default: "https://img.favpng.com/24/15/4/computer-icons-avatar-user-profile-blog-png-favpng-9wEFLzf04C5m4ShX8e57uczCy.jpg"
   },
