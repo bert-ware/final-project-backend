@@ -8,7 +8,6 @@ const providerSchema = new Schema({
     type: String,
     trim: true,
     required: [true, "Name is a mandatory field"],
-    unique: [true, "Name already in use"]
   },
   adress: {
     street: {

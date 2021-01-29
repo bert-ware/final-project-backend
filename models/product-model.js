@@ -7,7 +7,7 @@ const productSchema = new Schema ({
     name: {
         type: String,
         trim: true,
-        required: true,
+        required: [true, "Name is a mandatory field"],
     },
     price : {
         type: Number,
@@ -16,11 +16,11 @@ const productSchema = new Schema ({
     typeFormat: {
         type : String,
         enum : ["Grams", "Centiliters"],
-        required: true
+        required: [true, "Format is a mandatory field"]
     },
     format: {
         type: Number,
-        required: true
+        required: [true, "Format is a mandatory field"]
     },     
     info: {
         type: String
